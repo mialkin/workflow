@@ -1,3 +1,4 @@
+using Scalar.AspNetCore;
 using Workflow.Api.Workflows;
 using WorkflowCore.Interface;
 
@@ -10,13 +11,11 @@ services.AddWorkflow(x => x.UseMongoDB("mongodb://workflow:workflow@localhost:52
 
 var application = builder.Build();
 
-application.UseSwagger();
-application.UseSwaggerUI();
+application.UseSwagger(options => { options.RouteTemplate = "openapi/{documentName}.json"; });
 
-application.MapGet(
-        pattern: "/",
-        handler: () => "ping")
-    .WithOpenApi();
+application.MapScalarApiReference(x => { x.Title = "Workflow Core API"; });
+
+application.MapGet("/", () => Results.Redirect("/scalar/v1")).ExcludeFromDescription();
 
 var host = application.Services.GetService<IWorkflowHost>();
 host!.RegisterWorkflow<HelloWorldWorkflow>();
