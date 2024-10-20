@@ -1,0 +1,10 @@
+services:
+  sl-mongodb:
+    image: mongodb/mongodb-community-server:7.0-ubi9
+    container_name: workflow-mongo
+    restart: unless-stopped
+    ports:
+      - 5230:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: workflow
+      MONGO_INITDB_ROOT_PASSWORD: workflow
