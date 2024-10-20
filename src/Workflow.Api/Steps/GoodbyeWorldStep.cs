@@ -3,11 +3,11 @@ using WorkflowCore.Models;
 
 namespace Workflow.Api.Steps;
 
-public class GoodbyeWorldStep : StepBody
+public class GoodbyeWorldStep(ILogger<HelloWorldStep> logger) : StepBody
 {
     public override ExecutionResult Run(IStepExecutionContext context)
     {
-        Console.WriteLine("Goodbye world");
+        logger.LogInformation("Goodbye world");
 
         return ExecutionResult.Next();
     }

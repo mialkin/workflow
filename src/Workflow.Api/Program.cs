@@ -1,4 +1,5 @@
 using Scalar.AspNetCore;
+using Workflow.Api.Steps;
 using Workflow.Api.Workflows;
 using WorkflowCore.Interface;
 
@@ -8,6 +9,8 @@ var services = builder.Services;
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddWorkflow(x => x.UseMongoDB("mongodb://workflow:workflow@localhost:5230", "workflow"));
+services.AddTransient<HelloWorldStep>();
+services.AddTransient<GoodbyeWorldStep>();
 
 var application = builder.Build();
 
@@ -17,10 +20,20 @@ application.MapScalarApiReference(x => { x.Title = "Workflow Core API"; });
 
 application.MapGet("/", () => Results.Redirect("/scalar/v1")).ExcludeFromDescription();
 
+application.MapGet(
+    "/start", (IWorkflowHost host) =>
+    {
+        _ = host.StartWorkflow(workflowId: "Hello World", data: null, reference: null);
+
+
+        // host.PublishEvent(
+        //     eventName: "Whatever",
+        //     eventKey: "key",
+        //     eventData: new { Message = "Hello World!" });
+    });
+
 var host = application.Services.GetService<IWorkflowHost>();
 host!.RegisterWorkflow<HelloWorldWorkflow>();
 host.Start();
-
-// _ = host.StartWorkflow(workflowId: "HelloWorld", data: 1, reference: null);
 
 application.Run();
