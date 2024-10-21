@@ -1,4 +1,5 @@
 using Scalar.AspNetCore;
+using Workflow.Api.Constants;
 using Workflow.Api.Steps;
 using Workflow.Api.Workflows;
 using WorkflowCore.Interface;
@@ -23,7 +24,7 @@ application.MapGet("/", () => Results.Redirect("/scalar/v1")).ExcludeFromDescrip
 application.MapGet(
     "/start", (IWorkflowHost host) =>
     {
-        _ = host.StartWorkflow(workflowId: "Hello World", data: null, reference: null);
+        _ = host.StartWorkflow(workflowId: WorkflowIds.HelloWorld, data: null, reference: null);
 
 
         // host.PublishEvent(
