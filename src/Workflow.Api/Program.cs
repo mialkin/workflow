@@ -34,7 +34,10 @@ application.MapGet("/", () => Results.Redirect("/scalar/v1")).ExcludeFromDescrip
 application.MapGet(
     "/start-workflow", async (IWorkflowHost host, ILogger<Program> logger) =>
     {
-        var id = await host.StartWorkflow(workflowId: WorkflowIds.HelloWorld, data: null, reference: null);
+        var id = await host.StartWorkflow(
+            workflowId: WorkflowIds.HelloWorld,
+            data: new WorkflowContext { Number1 = 5, Number2 = 10 },
+            reference: null);
 
         logger.LogInformation("Workflow started. Workflow ID: {WorkflowId}", id);
 
@@ -45,7 +48,7 @@ application.MapGet(
     });
 
 var host = application.Services.GetService<IWorkflowHost>();
-host!.RegisterWorkflow<HelloWorldWorkflow>();
+host!.RegisterWorkflow<HelloWorldWorkflow, WorkflowContext>();
 host.Start();
 
 application.Run();

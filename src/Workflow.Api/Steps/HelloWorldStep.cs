@@ -5,6 +5,10 @@ namespace Workflow.Api.Steps;
 
 public class HelloWorldStep(ILogger<HelloWorldStep> logger) : StepBody
 {
+    public int Input1 { get; set; }
+    public int Input2 { get; set; }
+    public int Output { get; set; }
+
     public override ExecutionResult Run(IStepExecutionContext context)
     {
         logger.LogInformation("Hello world");
