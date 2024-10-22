@@ -11,7 +11,7 @@ public class CalculationStep(ILogger<CalculationStep> logger) : StepBody
 
     public override ExecutionResult Run(IStepExecutionContext context)
     {
-        logger.LogInformation("Hello world");
+        logger.LogInformation("Calculated things");
 
         return ExecutionResult.Next();
     }

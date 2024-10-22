@@ -22,7 +22,7 @@ services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddWorkflow(x => x.UseMongoDB("mongodb://workflow:workflow@localhost:5230", "workflow"));
 services.AddTransient<CalculationStep>();
-services.AddTransient<GoodbyeWorldStep>();
+services.AddTransient<FinalStep>();
 
 var application = builder.Build();
 

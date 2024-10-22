@@ -16,6 +16,6 @@ public class HelloWorldWorkflow : IWorkflow<WorkflowContext>
             .Input(x => x.Input1, y => y.Number1)
             .Input(x => x.Input2, y => y.Number2)
             .Output(x => x.Answer, y => y.Output)
-            .Then<GoodbyeWorldStep>();
+            .Then<FinalStep>();
     }
 }
