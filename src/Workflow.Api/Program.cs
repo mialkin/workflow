@@ -22,10 +22,11 @@ application.MapScalarApiReference(x => { x.Title = "Workflow Core API"; });
 application.MapGet("/", () => Results.Redirect("/scalar/v1")).ExcludeFromDescription();
 
 application.MapGet(
-    "/start", (IWorkflowHost host) =>
+    "/start-workflow", async (IWorkflowHost host, ILogger<Program> logger) =>
     {
-        _ = host.StartWorkflow(workflowId: WorkflowIds.HelloWorld, data: null, reference: null);
+        var id = await host.StartWorkflow(workflowId: WorkflowIds.HelloWorld, data: null, reference: null);
 
+        logger.LogInformation("Workflow started. Workflow ID: {WorkflowId}", id);
 
         // host.PublishEvent(
         //     eventName: "Whatever",
