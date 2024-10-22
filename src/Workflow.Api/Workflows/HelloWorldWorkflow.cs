@@ -1,10 +1,11 @@
 using Workflow.Api.Constants;
 using Workflow.Api.Steps;
 using WorkflowCore.Interface;
+using WorkflowCore.Models;
 
 namespace Workflow.Api.Workflows;
 
-public class HelloWorldWorkflow : IWorkflow<WorkflowContext>
+public class HelloWorldWorkflow(ILogger<HelloWorldWorkflow> logger) : IWorkflow<WorkflowContext>
 {
     public string Id => WorkflowIds.HelloWorld;
     public int Version => 1;
@@ -16,6 +17,16 @@ public class HelloWorldWorkflow : IWorkflow<WorkflowContext>
             .Input(x => x.Input1, y => y.Number1)
             .Input(x => x.Input2, y => y.Number2)
             .Output(x => x.Sum, y => y.Output)
-            .Then<FinalStep>().Input(x => x.Sum, y => y.Sum);
+            .Then<DisplaySumStep>()
+            .Input(x => x.Sum, y => y.Sum)
+            .Then<ManualStep>()
+            // .WaitFor(eventName: "my-event-name", eventKey: x => "my-event-key")
+            .Then(
+                context =>
+                {
+                    logger.LogInformation("Workflow complete");
+                    return ExecutionResult.Next();
+                }
+            );
     }
 }

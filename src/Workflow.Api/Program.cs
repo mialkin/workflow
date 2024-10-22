@@ -22,7 +22,8 @@ services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddWorkflow(x => x.UseMongoDB("mongodb://workflow:workflow@localhost:5230", "workflow"));
 services.AddTransient<CalculationStep>();
-services.AddTransient<FinalStep>();
+services.AddTransient<DisplaySumStep>();
+services.AddTransient<ManualStep>();
 
 var application = builder.Build();
 
@@ -48,6 +49,10 @@ application.MapGet(
         //     eventKey: "key",
         //     eventData: new { Message = "Hello World!" });
     });
+
+application.MapGet(
+    pattern: "/publish-event",
+    handler: void (IWorkflowHost host) => host.PublishEvent("my-event-name", "my-event-key", null));
 
 var host = application.Services.GetService<IWorkflowHost>();
 host!.RegisterWorkflow<HelloWorldWorkflow, WorkflowContext>();
