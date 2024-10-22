@@ -14,7 +14,7 @@ docker-compose --file infrastructure.yaml up --detach
 ```
 
 ```bash
-dotnet run --project=src/Workflow.Api
+dotnet watch --no-hot-reload --project=src/Workflow.Api
 ```
 
 ## Other workflow engines

@@ -1,4 +1,5 @@
 using Scalar.AspNetCore;
+using Serilog;
 using Workflow.Api.Constants;
 using Workflow.Api.Steps;
 using Workflow.Api.Workflows;
@@ -7,6 +8,14 @@ using WorkflowCore.Interface;
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
+
+builder.Host.UseSerilog(
+    (context, configuration) =>
+    {
+        configuration.ReadFrom.Configuration(context.Configuration);
+        configuration.WriteTo.Console();
+    });
+
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddWorkflow(x => x.UseMongoDB("mongodb://workflow:workflow@localhost:5230", "workflow"));
@@ -15,6 +24,7 @@ services.AddTransient<GoodbyeWorldStep>();
 
 var application = builder.Build();
 
+application.UseSerilogRequestLogging();
 application.UseSwagger(options => { options.RouteTemplate = "openapi/{documentName}.json"; });
 
 application.MapScalarApiReference(x => { x.Title = "Workflow Core API"; });
