@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10"/>
-        <PackageReference Include="Scalar.AspNetCore" Version="1.2.9"/>
+        <PackageReference Include="Scalar.AspNetCore" Version="1.2.18"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0"/>
         <PackageReference Include="WorkflowCore" Version="3.11.0"/>
         <PackageReference Include="WorkflowCore.Persistence.MongoDB" Version="3.11.0"/>
