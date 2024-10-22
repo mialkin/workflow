@@ -1,3 +1,5 @@
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using Scalar.AspNetCore;
 using Serilog;
 using Workflow.Api.Constants;
@@ -19,7 +21,7 @@ builder.Host.UseSerilog(
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddWorkflow(x => x.UseMongoDB("mongodb://workflow:workflow@localhost:5230", "workflow"));
-services.AddTransient<HelloWorldStep>();
+services.AddTransient<CalculationStep>();
 services.AddTransient<GoodbyeWorldStep>();
 
 var application = builder.Build();
@@ -49,6 +51,10 @@ application.MapGet(
 
 var host = application.Services.GetService<IWorkflowHost>();
 host!.RegisterWorkflow<HelloWorldWorkflow, WorkflowContext>();
+
+var objectSerializer = new ObjectSerializer(ObjectSerializer.AllAllowedTypes);
+BsonSerializer.RegisterSerializer(objectSerializer);
+
 host.Start();
 
 application.Run();

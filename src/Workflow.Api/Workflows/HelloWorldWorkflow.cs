@@ -12,7 +12,7 @@ public class HelloWorldWorkflow : IWorkflow<WorkflowContext>
     public void Build(IWorkflowBuilder<WorkflowContext> builder)
     {
         builder
-            .StartWith<HelloWorldStep>()
+            .StartWith<CalculationStep>()
             .Input(x => x.Input1, y => y.Number1)
             .Input(x => x.Input2, y => y.Number2)
             .Output(x => x.Answer, y => y.Output)

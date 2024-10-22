@@ -3,7 +3,7 @@ using WorkflowCore.Models;
 
 namespace Workflow.Api.Steps;
 
-public class HelloWorldStep(ILogger<HelloWorldStep> logger) : StepBody
+public class CalculationStep(ILogger<CalculationStep> logger) : StepBody
 {
     public int Input1 { get; set; }
     public int Input2 { get; set; }
