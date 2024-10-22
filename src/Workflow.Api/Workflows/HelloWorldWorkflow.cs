@@ -15,7 +15,7 @@ public class HelloWorldWorkflow : IWorkflow<WorkflowContext>
             .StartWith<CalculationStep>()
             .Input(x => x.Input1, y => y.Number1)
             .Input(x => x.Input2, y => y.Number2)
-            .Output(x => x.Answer, y => y.Output)
-            .Then<FinalStep>();
+            .Output(x => x.Sum, y => y.Output)
+            .Then<FinalStep>().Input(x => x.Sum, y => y.Sum);
     }
 }

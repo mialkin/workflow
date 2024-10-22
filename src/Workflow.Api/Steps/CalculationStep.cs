@@ -11,7 +11,9 @@ public class CalculationStep(ILogger<CalculationStep> logger) : StepBody
 
     public override ExecutionResult Run(IStepExecutionContext context)
     {
-        logger.LogInformation("Calculated things");
+        logger.LogInformation("Running calculation step: {One} + {Two}", Input1, Input2);
+
+        Output = Input1 + Input2;
 
         return ExecutionResult.Next();
     }
