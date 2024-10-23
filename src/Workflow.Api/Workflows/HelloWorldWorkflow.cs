@@ -20,9 +20,9 @@ public class HelloWorldWorkflow(ILogger<HelloWorldWorkflow> logger) : IWorkflow<
             .Then<DisplaySumStep>()
             .Input(x => x.Sum, y => y.Sum)
             .Then<ManualStep>()
-            .WaitFor(eventName: "my-event-name", eventKey: x => "my-event-key")
+            .WaitFor(eventName: EventNames.MyEvent, eventKey: x => EventKeys.MyKey)
             .Then(
-                context =>
+                _ =>
                 {
                     logger.LogInformation("Workflow complete");
                     return ExecutionResult.Next();

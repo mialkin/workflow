@@ -60,7 +60,10 @@ application.MapGet(
 
 application.MapGet(
     pattern: "/publish-event",
-    handler: void (IWorkflowHost host) => host.PublishEvent("my-event-name", "my-event-key", null));
+    handler: void (IWorkflowHost host) => host.PublishEvent(
+        eventName: EventNames.MyEvent,
+        eventKey: EventKeys.MyKey,
+        eventData: null));
 
 var host = application.Services.GetService<IWorkflowHost>();
 host!.RegisterWorkflow<HelloWorldWorkflow, WorkflowContext>();
