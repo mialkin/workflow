@@ -51,11 +51,6 @@ application.MapGet(
             reference: null);
 
         logger.LogInformation("Workflow started. Workflow ID: {WorkflowId}", id);
-
-        // host.PublishEvent(
-        //     eventName: "Whatever",
-        //     eventKey: "key",
-        //     eventData: new { Message = "Hello World!" });
     });
 
 application.MapGet(
