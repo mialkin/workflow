@@ -1,5 +1,5 @@
 services:
-  sl-mongodb:
+  mongodb:
     image: mongodb/mongodb-community-server:7.0-ubi9
     container_name: workflow-mongo
     restart: unless-stopped
@@ -8,3 +8,14 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: workflow
       MONGO_INITDB_ROOT_PASSWORD: workflow
+
+  postgres:
+    image: postgres:16.2
+    container_name: workflow-postgres
+    restart: unless-stopped
+    ports:
+      - 5240:5432
+    environment:
+      POSTGRES_USER: workflow
+      POSTGRES_PASSWORD: workflow
+      POSTGRES_DB: workflow

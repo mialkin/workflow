@@ -9,12 +9,22 @@ Showcase of [↑ Workflow Core](https://github.com/danielgerlag/workflow-core) l
 
 ## Running application
 
+Run infrastructure:
+
 ```bash
-docker-compose --file infrastructure.yaml up --detach
+docker-compose --file src/Workflow.Api/infrastructure.yaml up --detach
 ```
+
+Run application:
 
 ```bash
 dotnet watch --no-hot-reload --project=src/Workflow.Api
+```
+
+Shutdown infrastructure:
+
+```bash
+docker-compose --file src/Workflow.Api/infrastructure.yaml down
 ```
 
 ## Other workflow engines
