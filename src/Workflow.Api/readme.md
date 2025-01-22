@@ -1,30 +1,30 @@
-# Workflow Core
+# Workflow API
 
 Showcase of [↑ Workflow Core](https://github.com/danielgerlag/workflow-core) library.
 
 ## Prerequisites
 
-- .NET 8 SDK
-- Docker
+- [↑ .NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [↑ Docker](https://www.docker.com/products/docker-desktop/)
 
 ## Running application
 
 Run infrastructure:
 
 ```bash
-docker compose --file src/Workflow.Api/infrastructure.yaml up --detach
+docker compose --file infrastructure.yaml up --detach
 ```
 
 Run application:
 
 ```bash
-dotnet watch --no-hot-reload --project=src/Workflow.Api
+dotnet watch --no-hot-reload
 ```
 
 Shutdown infrastructure:
 
 ```bash
-docker compose --file src/Workflow.Api/infrastructure.yaml down
+docker compose --file infrastructure.yaml down
 ```
 
 ## Other workflow engines
