@@ -20,14 +20,16 @@ builder.Host.UseSerilog(
 
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
-// services.AddWorkflow(
-//     x => x.UseMongoDB(mongoUrl: "mongodb://workflow:workflow@localhost:5230", databaseName: "workflow"));
 
 services.AddWorkflow(
-    x => x.UsePostgreSQL(
-        connectionString: "User ID=workflow;Password=workflow;Host=localhost;Port=5240;Database=workflow",
-        canCreateDB: true,
-        canMigrateDB: true));
+    // UseMongoDB method has an overload that uses IMongoDatabase interface 
+    x => x.UseMongoDB(mongoUrl: "mongodb://workflow:workflow@localhost:5230", databaseName: "workflow"));
+
+// services.AddWorkflow(
+//     x => x.UsePostgreSQL(
+//         connectionString: "User ID=workflow;Password=workflow;Host=localhost;Port=5240;Database=workflow",
+//         canCreateDB: true,
+//         canMigrateDB: true));
 
 services.AddTransient<CalculationStep>();
 services.AddTransient<DisplaySumStep>();
@@ -60,12 +62,12 @@ application.MapGet(
         eventKey: EventKeys.MyKey,
         eventData: null));
 
-var host = application.Services.GetService<IWorkflowHost>();
-host!.RegisterWorkflow<HelloWorldWorkflow, WorkflowContext>();
+var workflowHost = application.Services.GetRequiredService<IWorkflowHost>();
+workflowHost.RegisterWorkflow<HelloWorldWorkflow, WorkflowContext>();
 
-// var objectSerializer = new ObjectSerializer(ObjectSerializer.AllAllowedTypes);
-// BsonSerializer.RegisterSerializer(objectSerializer);
+var objectSerializer = new ObjectSerializer(ObjectSerializer.AllAllowedTypes);
+BsonSerializer.RegisterSerializer(objectSerializer);
 
-host.Start();
+workflowHost.Start();
 
 application.Run();
